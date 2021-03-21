@@ -11,6 +11,7 @@ GIT_HASH="master"
 HEROKU_VERIFIED=0
 OFFSITE_HEROKU_DB=" "
 STRATEGY_TYPE="deploy"
+DATABASE_CONNS=7
 
 # Clean out any existing contents
 rm -rf ./${BITWARDEN_RS_FOLDER}
@@ -58,7 +59,7 @@ function heroku_bootstrap {
     heroku config:set ADMIN_TOKEN="$(openssl rand -base64 48)" -a "${APP_NAME}" > /dev/null
 
     echo "And set DB connections to seven in order not to saturate the free DB"
-    heroku config:set DATABASE_MAX_CONNS=7 -a "${APP_NAME}"
+    heroku config:set DATABASE_MAX_CONNS="${DATABASE_CONNS}" -a "${APP_NAME}"
 }
 
 function check_addons {
@@ -110,11 +111,12 @@ function help {
     printf "Welcome to help!\Use option -a for app name,\n-d <0/1> to enable duo,\n -g to set a git hash to clone bitwarden_rs from,\n and -t to specify if deployment or update!"
 }
 
-while getopts a:b:d:g:t:u:v: flag
+while getopts a:b:c:d:g:t:u:v: flag
 do
     case "${flag}" in
         a) CREATE_APP_NAME=${OPTARG};;
         b) ENABLE_AUTOBUS_BACKUP=${OPTARG};;
+        b) DATABASE_CONNS=${OPTARG};;
         d) ENABLE_DUO=${OPTARG};;
         g) GIT_HASH=${OPTARG};;
         t) STRATEGY_TYPE=${OPTARG};;
