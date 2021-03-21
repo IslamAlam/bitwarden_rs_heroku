@@ -116,7 +116,7 @@ do
     case "${flag}" in
         a) CREATE_APP_NAME=${OPTARG};;
         b) ENABLE_AUTOBUS_BACKUP=${OPTARG};;
-        b) DATABASE_CONNS=${OPTARG};;
+        c) DATABASE_CONNS=${OPTARG};;
         d) ENABLE_DUO=${OPTARG};;
         g) GIT_HASH=${OPTARG};;
         t) STRATEGY_TYPE=${OPTARG};;
